@@ -15,6 +15,60 @@ Unlike AI-heavy approaches, this system is built on a hybrid architecture that p
 This makes the pipeline suitable for real-world database enrichment tasks where both accuracy and cost efficiency are critical.
 
 ## Pipeline Architecture
+```mermaid
+flowchart TD
+
+A[Keyword Input] --> B[Search API Layer]
+B --> C[Result Filtering]
+C -->|Keep| D[Official Company Websites]
+C -->|Remove| X[Directories Blogs Jobs]
+
+D --> E[Page Retrieval and Content Parsing]
+
+E --> N[Name Module]
+E --> L[Logo Module]
+E --> DS[Description Brief Module]
+E --> O[Office Module]
+E --> CT[Contact Module]
+E --> SM[Social Profile Module]
+
+N --> N1[Rule Ranking by source position text patterns and title consistency]
+N1 --> N2[Cross check with domain and social slugs]
+
+L --> L1[Image candidate filtering by size format and location]
+L1 --> L2[OCR and brand text matching]
+
+DS --> DS1[Content extraction from homepage about and metadata]
+DS1 --> DS2[Text quality and consistency checks]
+
+O --> O1[Address and office signal extraction]
+O1 --> O2[Location normalisation and duplicate cleaning]
+
+CT --> CT1[Contact extraction from page signals]
+CT1 --> CT2[Pattern validation for email phone and role labels]
+
+SM --> SM1[Official profile candidate detection]
+SM1 --> SM2[Slug and brand consistency matching]
+
+N2 --> H[Confidence Decision Layer]
+L2 --> H
+DS2 --> H
+O2 --> H
+CT2 --> H
+SM2 --> H
+
+H --> I{Accept AI or Reject}
+
+I -->|High confidence| J[Accept Attribute]
+I -->|Borderline| K[Selective AI Validation]
+I -->|Low confidence| R[Reject and Leave Blank]
+
+K --> J
+K -->|Still uncertain| R
+
+J --> Z[Structured Company Record]
+R --> Z
+```
 
 The pipeline is composed of three tightly integrated layers:
 
