@@ -32,38 +32,25 @@ E --> O[Office Module]
 E --> CT[Contact Module]
 E --> SM[Social Profile Module]
 
-N --> N1[Rule Ranking by source position text patterns and title consistency]
-N1 --> N2[Cross check with domain and social slugs]
+N --> N1[Source weighted ranking and identity consistency checks]
+L --> L1[Image filtering OCR matching and brand verification]
+DS --> DS1[Text extraction quality scoring and semantic consistency]
+O --> O1[Address extraction normalisation and office validation]
+CT --> CT1[Email phone and contact signal validation]
+SM --> SM1[Official profile detection and slug matching]
 
-L --> L1[Image candidate filtering by size format and location]
-L1 --> L2[OCR and brand text matching]
+N1 --> H[Field Resolution Decision]
+L1 --> H
+DS1 --> H
+O1 --> H
+CT1 --> H
+SM1 --> H
 
-DS --> DS1[Content extraction from homepage about and metadata]
-DS1 --> DS2[Text quality and consistency checks]
+H -->|High confidence| J[Accept Attribute]
+H -->|Borderline| K[Selective AI Validation]
+H -->|Low confidence| R[Reject and Leave Blank]
 
-O --> O1[Address and office signal extraction]
-O1 --> O2[Location normalisation and duplicate cleaning]
-
-CT --> CT1[Contact extraction from page signals]
-CT1 --> CT2[Pattern validation for email phone and role labels]
-
-SM --> SM1[Official profile candidate detection]
-SM1 --> SM2[Slug and brand consistency matching]
-
-N2 --> H[Confidence Decision Layer]
-L2 --> H
-DS2 --> H
-O2 --> H
-CT2 --> H
-SM2 --> H
-
-H --> I{Accept AI or Reject}
-
-I -->|High confidence| J[Accept Attribute]
-I -->|Borderline| K[Selective AI Validation]
-I -->|Low confidence| R[Reject and Leave Blank]
-
-K --> J
+K -->|Resolved| J
 K -->|Still uncertain| R
 
 J --> Z[Structured Company Record]
