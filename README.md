@@ -55,6 +55,9 @@ K -->|Still uncertain| R
 
 J --> Z[Structured Company Record]
 R --> Z
+
+Z --> DQ[Entity Resolution & Deduplication]
+DQ --> F[Final Clean Company Record / Database Output]
 ```
 
 The pipeline is composed of three tightly integrated layers:
